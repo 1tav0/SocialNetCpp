@@ -16,7 +16,6 @@ class user{
         string city;
         string company;
         int userId;
-
-}
+};
 
 #endif /* USER_H */
