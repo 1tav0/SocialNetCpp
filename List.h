@@ -173,7 +173,38 @@ class List {
 
         void printNamesAtInterests(ostream &out) const;
         // Prints users from the Interest Table based on the index
-        
+
 };
+    //defines that the class "List" is a template clas, and it has a parameter named 'listdata' which means that the class can be used with different data types.
+    // List<int> intList or List<string> stringList
+    template <class listdata>
+    List<listdata>::List(){
+        head = NULL;
+        tail = NULL;
+        iterator = NULL;
+        length = 0;
+    }
+
+    template <class listdata>
+    List<listdata>::List(const List &list){
+        //precondition list cannot be empty
+        if(list->head==NULL){
+            head = tail = iterator = NULL;
+        }else{
+            head = new Node(list->head->data);  //create a new head node with the data from the head of the original list
+            Node *temp = list->head;            //set up a temp pointer to the head of the original list 
+            iterator = head;                    //set the iterator to point to the head of the new list
+
+            while(temp->next != NULL){                          //iterate the original list so we can copy it 
+                temp = temp->next;                              //advance to the next node in the original list
+                iterator->next = new Node(temp->data);          //connect the next pointer of the new list to a new node created with the data of the original list
+                iterator->next->prev = iterator;                //connecting the new node's prev to point back to where the iterator is
+                iterator = iterator->next;                      //advance the iterator to the new node connected 
+            }
+            tail = iterator;                    //iterator should be at the end of the list so now the tail should be where the iterator is
+            iterator = NULL;                    //should not leave iterator anywhere unexepected
+        }
+        length = list.length;                   //copy the length of the original list to the new length 
+    }
 
 #endif /* LIST_H_*/
