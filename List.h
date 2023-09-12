@@ -64,7 +64,7 @@ class List {
         //Returns the last node int the list
         //Precondition: the list is not empty
 
-        bool isEmpty() const;
+        bool isEmptyy() const;
         //Determines if the list is empty
 
         int getLength() const;
@@ -206,5 +206,50 @@ class List {
         }
         length = list.length;                   //copy the length of the original list to the new length 
     }
+
+    template <class listdata>
+    List<listdata>::~List(){
+        Node *iterator = head;
+        Node *dummy = NULL;
+        while(iterator != NULL){
+            dummy = iterator->next; //make dummy point to the iterators next
+            delete iterator;        //delete the node pointed to by the iterator 
+            iterator = dummy;       //reuse the iterator to point back to the dummy 
+        }
+    }
+
+    template <class listdata>
+    listdata List<listdata>::getFirst() const{
+        assert(length != 0); //program halts execution if list is empty
+        return head->data;
+    }
+
+    template <class listdata>
+    listdata List<listdata>::getLast() const{
+        assert(length != 0);
+        return tail->data;
+    }
+
+    template <class listdata>
+    bool List<listdata>::isEmptyy() const{
+        return length == 0;
+    }
+
+    template <class listdata>
+    int List<listdata>::getLength() const{
+        return length;
+    }
+
+    template <class listdata>
+    listdata List<listdata>::getIterator() const{
+        assert(!offEnd());
+        return iterator->data;
+    }
+
+    template <class listdata>
+    bool List<listdata>::offEnd() const{
+        return iterator == NULL;
+    }
+    
 
 #endif /* LIST_H_*/
